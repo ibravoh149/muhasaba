@@ -29,6 +29,13 @@ yarn-error.*
 # macOS
 .DS_Store
 *.pem
+.AppleDouble
+.LSOverride
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.Trashes
 
 # local env files
 .env*.local
@@ -41,3 +48,10 @@ example
 # generated native folders
 /ios
 /android
+*.xcworkspace/
+DerivedData/
+.idea/
+
+
+# Claude
+.claude/

@@ -8,7 +8,8 @@
     "scheme": "muhasaba",
     "userInterfaceStyle": "automatic",
     "ios": {
-      "icon": "./assets/expo.icon"
+      "icon": "./assets/expo.icon",
+      "bundleIdentifier": "com.muhasaba.ibadah"
     },
     "android": {
       "adaptiveIcon": {
@@ -39,6 +40,12 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "42b4e86a-c38e-498c-b090-2e168001d2e2"
+      }
     }
   }
 }
