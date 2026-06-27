@@ -1,6 +1,7 @@
-import * as SecureStore from 'expo-secure-store';
 import { createContext, useContext, useEffect, useMemo, useReducer } from 'react';
 import { Platform } from 'react-native';
+
+import * as SecureStore from 'expo-secure-store';
 
 export type User = {
   id: string;
