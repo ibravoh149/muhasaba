@@ -17,4 +17,9 @@ export default {
   onboarding: {
     selectLanguage: 'Zaɓi yarenka',
   },
+  calendar: {
+    hijri: 'Hijri',
+    gregorian: 'Gregoriya',
+    today: 'Yau',
+  },
 } as const;

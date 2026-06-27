@@ -17,4 +17,9 @@ export default {
   onboarding: {
     selectLanguage: 'Yan ede rẹ',
   },
+  calendar: {
+    hijri: 'Hijri',
+    gregorian: 'Gregoriani',
+    today: 'Loni',
+  },
 } as const;

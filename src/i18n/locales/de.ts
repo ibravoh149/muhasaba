@@ -17,4 +17,9 @@ export default {
   onboarding: {
     selectLanguage: 'Sprache wählen',
   },
+  calendar: {
+    hijri: 'Hijri',
+    gregorian: 'Gregorianisch',
+    today: 'Heute',
+  },
 } as const;

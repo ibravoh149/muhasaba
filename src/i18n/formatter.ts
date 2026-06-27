@@ -1,7 +1,5 @@
 import { SupportedLanguage } from './index';
 
-// Maps app language codes to BCP 47 locale tags for Intl APIs.
-// Languages with limited Intl support fall back to English formatting.
 const LOCALE_MAP: Record<SupportedLanguage, string> = {
   en: 'en-US',
   ar: 'ar-SA',
@@ -38,6 +36,14 @@ export function formatDateTime(date: Date, lang: SupportedLanguage): string {
     day: 'numeric',
     hour: 'numeric',
     minute: '2-digit',
+  }).format(date);
+}
+
+export function formatHijriDate(date: Date, lang: SupportedLanguage): string {
+  return new Intl.DateTimeFormat(`${getLocale(lang)}-u-ca-islamic`, {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
   }).format(date);
 }
 
