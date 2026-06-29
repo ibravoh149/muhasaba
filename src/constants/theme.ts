@@ -7,6 +7,7 @@ export const Palette = {
   primaryShade1: "#182424",
   primaryShade2: "#335DDC",
   primaryShade3: "#2ED7D7",
+  primaryShade4: "#71A4A4",
   secondaryTint: "#243737",
   accent: "#F5CB10",
   warm: "#DC8233",

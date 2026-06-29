@@ -61,15 +61,138 @@ function AnimatedDot({ active }: Readonly<{ active: boolean }>) {
   return <Animated.View style={[styles.dot, animatedStyle]} />;
 }
 
+function ReflectBackground() {
+  return (
+    <View
+      style={[
+        styles.shape,
+        {
+          width: 100,
+          height: 100,
+          top: "22%",
+          alignSelf: "center",
+          transform: [{ rotate: "27deg" }],
+          backgroundColor: Palette.primary,
+        },
+      ]}
+    />
+  );
+}
+
+function IntentionsBackground() {
+  return (
+    <>
+      <View
+        style={[
+          styles.shape,
+          {
+            width: 100,
+            height: 100,
+            top: "18%",
+            left: "8%",
+            transform: [{ rotate: "-10deg" }],
+            backgroundColor: Palette.primaryShade1,
+            borderWidth: 1,
+            borderColor: Palette.secondaryTint,
+          },
+        ]}
+      />
+      <View
+        style={[
+          styles.shape,
+          {
+            width: 100,
+            height: 100,
+            top: "22%",
+            left: "28%",
+            transform: [{ rotate: "13deg" }],
+            backgroundColor: Palette.base600,
+          },
+        ]}
+      />
+      <View
+        style={[
+          styles.shape,
+          {
+            width: 100,
+            height: 100,
+            top: "18%",
+            right: "30%",
+            transform: [{ rotate: "-14deg" }],
+            backgroundColor: Palette.primaryShade4,
+          },
+        ]}
+      />
+      <View
+        style={[
+          styles.shape,
+          {
+            width: 100,
+            height: 100,
+            top: "22%",
+            right: "8%",
+            transform: [{ rotate: "13deg" }],
+            backgroundColor: Palette.primary,
+          },
+        ]}
+      />
+    </>
+  );
+}
+
+function ConsistencyBackground() {
+  return (
+    <>
+      <View
+        style={[
+          styles.shape,
+          {
+            width: 210,
+            height: 210,
+            top: -30,
+            left: -60,
+            transform: [{ rotate: "50deg" }],
+            backgroundColor: Palette.primaryShade1,
+            borderRadius: 32,
+            borderWidth: 1,
+            borderColor: Palette.secondaryTint,
+          },
+        ]}
+      />
+      <View
+        style={[
+          styles.shape,
+          {
+            width: 190,
+            height: 190,
+            top: "10%",
+            right: "-7%",
+            transform: [{ rotate: "-47deg" }],
+            backgroundColor: Palette.primary,
+            borderRadius: 32,
+          },
+        ]}
+      />
+    </>
+  );
+}
+
+const ILLUSTRATIONS: Record<SlideKey, () => React.JSX.Element> = {
+  reflect: ReflectBackground,
+  intentions: IntentionsBackground,
+  consistency: ConsistencyBackground,
+};
+
 function OnboardingSlide({
   slideKey,
   height,
 }: Readonly<{ slideKey: SlideKey; height: number }>) {
   const { t } = useTranslation();
+  const Background = ILLUSTRATIONS[slideKey];
 
   return (
     <View style={[styles.slide, { height }]}>
-      {/* Illustration goes here */}
+      <Background />
       <View style={styles.textBlock}>
         <ThemedText type="subtitle" style={styles.title}>
           {t(SLIDE_MAP[slideKey].title)}
@@ -210,10 +333,16 @@ const styles = StyleSheet.create({
   slide: {
     width,
     justifyContent: "center",
+    overflow: "hidden",
+  },
+  shape: {
+    position: "absolute",
+    borderRadius: 20,
   },
   textBlock: {
     paddingHorizontal: Spacing.lg,
     gap: Spacing.sm,
+    marginTop: Spacing.xxl,
   },
   title: {
     textAlign: "center",
