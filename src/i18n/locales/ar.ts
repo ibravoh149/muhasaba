@@ -14,6 +14,47 @@ export default {
     email: 'البريد الإلكتروني',
     password: 'كلمة المرور',
     signOut: 'تسجيل الخروج',
+
+    beginYourJourney: 'ابدأ رحلتك',
+    beginSubtitle: 'أنشئ حسابًا لحفظ نواياك وتتبع تقدمك عبر أجهزتك.',
+    createAccount: 'إنشاء حساب',
+    alreadyHaveAccount: 'هل لديك حساب بالفعل؟',
+
+    or: 'أو',
+    continueWithGoogle: 'المتابعة عبر جوجل',
+    continueWithFacebook: 'المتابعة عبر فيسبوك',
+
+    welcomeBack: 'مرحبًا بعودتك!',
+    welcomeSubtitle: 'واصل رحلتك في التأمل والنمو.',
+    emailAddress: 'البريد الإلكتروني',
+    noAccount: 'ليس لديك حساب؟',
+    signUp: 'سجّل',
+    logIn: 'تسجيل الدخول',
+
+    firstName: 'الاسم الأول',
+    lastName: 'اسم العائلة',
+
+    forgotPasswordTitle: 'نسيت كلمة المرور',
+    forgotPasswordSubtitle: 'أدخل بريدك الإلكتروني وسنرسل لك رابطًا لإعادة تعيينها.',
+    sendResetLink: 'إرسال رابط الاسترداد',
+    rememberPassword: 'هل تتذكر كلمة مرورك؟',
+
+    checkYourEmail: 'تحقق من بريدك الإلكتروني',
+    emailSentTo: 'لقد أرسلنا رابط إعادة تعيين كلمة المرور إلى',
+    emailSentInstructions: 'يرجى مراجعة صندوق الوارد واتباع التعليمات لإعادة تعيين كلمة المرور.',
+    didntReceive: 'لم تستلمه؟ تحقق من البريد العشوائي أو حاول مرة أخرى.',
+    resendLink: 'إعادة الإرسال',
+    openEmailApp: 'فتح تطبيق البريد',
+
+    createNewPassword: 'إنشاء كلمة مرور جديدة',
+    createNewPasswordSubtitle: 'اختر كلمة مرور جديدة لحسابك.',
+    newPassword: 'كلمة المرور الجديدة',
+    confirmPassword: 'تأكيد كلمة المرور',
+    resetPassword: 'إعادة تعيين كلمة المرور',
+
+    passwordUpdated: 'تم تحديث كلمة المرور',
+    passwordUpdatedSubtitle: 'تمت إعادة تعيين كلمة مرورك بنجاح. يمكنك الآن تسجيل الدخول بكلمة المرور الجديدة.',
+    goToLogin: 'الذهاب إلى تسجيل الدخول',
   },
   onboarding: {
     selectLanguage: 'اختر لغتك المفضلة.',

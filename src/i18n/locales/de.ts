@@ -14,6 +14,47 @@ export default {
     email: 'E-Mail',
     password: 'Passwort',
     signOut: 'Abmelden',
+
+    beginYourJourney: 'Beginne deine Reise',
+    beginSubtitle: 'Erstelle ein Konto, um deine Absichten zu speichern und deinen Fortschritt geräteübergreifend zu verfolgen.',
+    createAccount: 'Konto erstellen',
+    alreadyHaveAccount: 'Hast du bereits ein Konto?',
+
+    or: 'oder',
+    continueWithGoogle: 'Mit Google fortfahren',
+    continueWithFacebook: 'Mit Facebook fortfahren',
+
+    welcomeBack: 'Willkommen zurück!',
+    welcomeSubtitle: 'Setze deine Reise der Reflexion und des Wachstums fort.',
+    emailAddress: 'E-Mail-Adresse',
+    noAccount: 'Noch kein Konto?',
+    signUp: 'Registrieren',
+    logIn: 'Einloggen',
+
+    firstName: 'Vorname',
+    lastName: 'Nachname',
+
+    forgotPasswordTitle: 'Passwort vergessen',
+    forgotPasswordSubtitle: 'Gib deine E-Mail ein und wir senden dir einen Link zum Zurücksetzen.',
+    sendResetLink: 'Zurücksetzen-Link senden',
+    rememberPassword: 'Du erinnerst dich an dein Passwort?',
+
+    checkYourEmail: 'Überprüfe deine E-Mail',
+    emailSentTo: 'Wir haben einen Passwort-Reset-Link gesendet an',
+    emailSentInstructions: 'Bitte überprüfe deinen Posteingang und folge den Anweisungen zum Zurücksetzen deines Passworts.',
+    didntReceive: 'Nicht erhalten? Überprüfe deinen Spam oder versuche es erneut.',
+    resendLink: 'Link erneut senden',
+    openEmailApp: 'E-Mail-App öffnen',
+
+    createNewPassword: 'Neues Passwort erstellen',
+    createNewPasswordSubtitle: 'Wähle ein neues Passwort für dein Konto.',
+    newPassword: 'Neues Passwort',
+    confirmPassword: 'Passwort bestätigen',
+    resetPassword: 'Passwort zurücksetzen',
+
+    passwordUpdated: 'Passwort aktualisiert',
+    passwordUpdatedSubtitle: 'Dein Passwort wurde erfolgreich zurückgesetzt. Du kannst dich jetzt mit deinem neuen Passwort anmelden.',
+    goToLogin: 'Zum Login',
   },
   onboarding: {
     selectLanguage: 'Wähle deine bevorzugte Sprache.',

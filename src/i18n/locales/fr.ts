@@ -14,6 +14,47 @@ export default {
     email: 'E-mail',
     password: 'Mot de passe',
     signOut: 'Se déconnecter',
+
+    beginYourJourney: 'Commencez votre voyage',
+    beginSubtitle: 'Créez un compte pour sauvegarder vos intentions et suivre votre progression sur tous vos appareils.',
+    createAccount: 'Créer un compte',
+    alreadyHaveAccount: 'Vous avez déjà un compte ?',
+
+    or: 'ou',
+    continueWithGoogle: 'Continuer avec Google',
+    continueWithFacebook: 'Continuer avec Facebook',
+
+    welcomeBack: 'Bon retour !',
+    welcomeSubtitle: 'Continuez votre voyage de réflexion et de croissance.',
+    emailAddress: 'Adresse e-mail',
+    noAccount: "Vous n'avez pas de compte ?",
+    signUp: "S'inscrire",
+    logIn: 'Se connecter',
+
+    firstName: 'Prénom',
+    lastName: 'Nom de famille',
+
+    forgotPasswordTitle: 'Mot de passe oublié',
+    forgotPasswordSubtitle: "Entrez votre e-mail et nous vous enverrons un lien pour le réinitialiser.",
+    sendResetLink: 'Envoyer le lien de réinitialisation',
+    rememberPassword: 'Vous vous souvenez de votre mot de passe ?',
+
+    checkYourEmail: 'Vérifiez votre e-mail',
+    emailSentTo: 'Nous avons envoyé un lien de réinitialisation à',
+    emailSentInstructions: 'Veuillez vérifier votre boîte de réception et suivre les instructions pour réinitialiser votre mot de passe.',
+    didntReceive: "Vous ne l'avez pas reçu ? Vérifiez vos spams ou réessayez.",
+    resendLink: 'Renvoyer le lien',
+    openEmailApp: "Ouvrir l'application e-mail",
+
+    createNewPassword: 'Créer un nouveau mot de passe',
+    createNewPasswordSubtitle: 'Choisissez un nouveau mot de passe pour votre compte.',
+    newPassword: 'Nouveau mot de passe',
+    confirmPassword: 'Confirmer le mot de passe',
+    resetPassword: 'Réinitialiser le mot de passe',
+
+    passwordUpdated: 'Mot de passe mis à jour',
+    passwordUpdatedSubtitle: 'Votre mot de passe a été réinitialisé avec succès. Vous pouvez maintenant vous connecter avec votre nouveau mot de passe.',
+    goToLogin: 'Aller à la connexion',
   },
   onboarding: {
     selectLanguage: 'Choisissez votre langue préférée.',
@@ -24,7 +65,7 @@ export default {
     slide1Title: 'Réfléchir avec intention',
     slide1Subtitle: 'Prenez un moment chaque jour pour réfléchir à vos actions, intentions et croissance spirituelle.',
     slide2Title: 'Définir des intentions profondes',
-    slide2Subtitle: 'Créez des objectifs personnels pour la prière, le Coran, l\'apprentissage, la charité et d\'autres actes d\'adoration.',
+    slide2Subtitle: "Créez des objectifs personnels pour la prière, le Coran, l'apprentissage, la charité et d'autres actes d'adoration.",
     slide3Title: 'Grandir par la constance',
     slide3Subtitle: 'Suivez vos progrès dans le temps et construisez des habitudes durables grâce à des actions petites et cohérentes.',
   },

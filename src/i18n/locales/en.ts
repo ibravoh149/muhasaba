@@ -14,6 +14,47 @@ export default {
     email: 'Email',
     password: 'Password',
     signOut: 'Sign out',
+
+    beginYourJourney: 'Begin Your Journey',
+    beginSubtitle: 'Create an account to save your intentions and track your progress across devices.',
+    createAccount: 'Create Account',
+    alreadyHaveAccount: 'Already have an account?',
+
+    or: 'or',
+    continueWithGoogle: 'Continue with Google',
+    continueWithFacebook: 'Continue with Facebook',
+
+    welcomeBack: 'Welcome back!',
+    welcomeSubtitle: 'Continue your journey of reflection and growth.',
+    emailAddress: 'Email Address',
+    noAccount: "Don't have an account?",
+    signUp: 'Sign up',
+    logIn: 'Log In',
+
+    firstName: 'First Name',
+    lastName: 'Last Name',
+
+    forgotPasswordTitle: 'Forgot password',
+    forgotPasswordSubtitle: "Enter your email and we'll send you a link to reset it.",
+    sendResetLink: 'Send reset link',
+    rememberPassword: 'Remember your password?',
+
+    checkYourEmail: 'Check your email',
+    emailSentTo: "We've sent a password reset link to",
+    emailSentInstructions: 'Please check your inbox and follow the instructions to reset your password.',
+    didntReceive: "Didn't receive it? Check your spam or try again.",
+    resendLink: 'Resend link',
+    openEmailApp: 'Open Email App',
+
+    createNewPassword: 'Create new password',
+    createNewPasswordSubtitle: 'Choose a new password for your account.',
+    newPassword: 'New Password',
+    confirmPassword: 'Confirm Password',
+    resetPassword: 'Reset password',
+
+    passwordUpdated: 'Password Updated',
+    passwordUpdatedSubtitle: 'Your password has been successfully reset. You can now log in with your new password.',
+    goToLogin: 'Go to Login',
   },
   onboarding: {
     selectLanguage: 'Choose your preferred language.',
