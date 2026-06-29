@@ -36,7 +36,9 @@ async function applyLanguage(lang: SupportedLanguage) {
   if (I18nManager.isRTL !== shouldBeRTL) {
     I18nManager.allowRTL(shouldBeRTL);
     I18nManager.forceRTL(shouldBeRTL);
-    await Updates.reloadAsync();
+    if (Updates.isEnabled) {
+      await Updates.reloadAsync();
+    }
   }
 }
 
