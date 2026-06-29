@@ -1,6 +1,6 @@
 # Fonts
 
-The app uses **DM Sans** loaded via `@expo-google-fonts/dm-sans`. Fonts are available after the splash screen hides — they're guaranteed to be ready by the time any screen renders.
+The app uses **DM Sans** as the primary font and **Madimi One** as the display/brand font. Both are loaded via Expo Google Fonts. Fonts are available after the splash screen hides — they're guaranteed to be ready by the time any screen renders.
 
 ## Available weights
 
@@ -11,6 +11,7 @@ The app uses **DM Sans** loaded via `@expo-google-fonts/dm-sans`. Fonts are avai
 | `Fonts.medium` | DMSans_500Medium | Subheadings, slightly emphasized text |
 | `Fonts.semiBold` | DMSans_600SemiBold | Buttons, labels, nav items |
 | `Fonts.bold` | DMSans_700Bold | Titles, headings |
+| `Fonts.display` | MadimiOne_400Regular | App name, brand moments only |
 | `Fonts.mono` | System monospace | Code, numbers that need fixed width |
 
 ## Basic usage
