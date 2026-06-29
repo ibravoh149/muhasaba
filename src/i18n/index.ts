@@ -30,7 +30,15 @@ export function isSupportedLanguage(code: string): code is SupportedLanguage {
 }
 
 i18n.use(initReactI18next).init({
-  resources: { en, ar, de, fr, ha, yo, ig },
+  resources: {
+    en: { translation: en },
+    ar: { translation: ar },
+    de: { translation: de },
+    fr: { translation: fr },
+    ha: { translation: ha },
+    yo: { translation: yo },
+    ig: { translation: ig },
+  },
   lng: 'en',
   fallbackLng: 'en',
   interpolation: { escapeValue: false },

@@ -1,5 +1,6 @@
 export default {
   common: {
+    appName: 'Muhasaba',
     ok: 'OK',
     cancel: 'Cancel',
     save: 'Save',
@@ -16,6 +17,15 @@ export default {
   },
   onboarding: {
     selectLanguage: 'Choose your language',
+    back: 'Back',
+    continue: 'Continue',
+    getStarted: 'Get Started',
+    slide1Title: 'Reflect with Purpose',
+    slide1Subtitle: 'Take a moment each day to reflect on your actions, intentions, and spiritual growth.',
+    slide2Title: 'Set Meaningful Intentions',
+    slide2Subtitle: 'Create personal goals for prayer, Quran, learning, charity, and other acts of worship.',
+    slide3Title: 'Grow Through Consistency',
+    slide3Subtitle: 'Track your progress over time and build lasting habits through small, consistent actions.',
   },
   calendar: {
     hijri: 'Hijri',

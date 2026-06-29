@@ -1,5 +1,6 @@
 export default {
   common: {
+    appName: 'Muhasaba',
     ok: 'OK',
     cancel: 'Abbrechen',
     save: 'Speichern',
@@ -16,6 +17,15 @@ export default {
   },
   onboarding: {
     selectLanguage: 'Sprache wählen',
+    back: 'Zurück',
+    continue: 'Weiter',
+    getStarted: 'Loslegen',
+    slide1Title: 'Mit Absicht reflektieren',
+    slide1Subtitle: 'Nimm dir jeden Tag einen Moment, um über deine Handlungen, Absichten und dein spirituelles Wachstum nachzudenken.',
+    slide2Title: 'Bedeutungsvolle Absichten setzen',
+    slide2Subtitle: 'Setze persönliche Ziele für Gebet, Koran, Lernen, Wohltätigkeit und andere Gottesdienste.',
+    slide3Title: 'Durch Beständigkeit wachsen',
+    slide3Subtitle: 'Verfolge deinen Fortschritt im Laufe der Zeit und baue dauerhafte Gewohnheiten durch kleine, konsequente Handlungen auf.',
   },
   calendar: {
     hijri: 'Hijri',

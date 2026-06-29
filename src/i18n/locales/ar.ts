@@ -1,5 +1,6 @@
 export default {
   common: {
+    appName: 'محاسبة',
     ok: 'حسناً',
     cancel: 'إلغاء',
     save: 'حفظ',
@@ -16,6 +17,15 @@ export default {
   },
   onboarding: {
     selectLanguage: 'اختر لغتك',
+    back: 'رجوع',
+    continue: 'متابعة',
+    getStarted: 'ابدأ الآن',
+    slide1Title: 'تأمل بهدف',
+    slide1Subtitle: 'خصص لحظة كل يوم للتأمل في أفعالك ونياتك ونموك الروحي.',
+    slide2Title: 'ضع نوايا ذات معنى',
+    slide2Subtitle: 'ضع أهدافاً شخصية للصلاة والقرآن والتعلم والصدقة وغيرها من أعمال العبادة.',
+    slide3Title: 'انمُ من خلال الاستمرارية',
+    slide3Subtitle: 'تتبع تقدمك بمرور الوقت وبنِ عادات دائمة من خلال أعمال صغيرة ومتسقة.',
   },
   calendar: {
     hijri: 'هجري',

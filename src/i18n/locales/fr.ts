@@ -1,5 +1,6 @@
 export default {
   common: {
+    appName: 'Muhasaba',
     ok: 'OK',
     cancel: 'Annuler',
     save: 'Enregistrer',
@@ -16,6 +17,15 @@ export default {
   },
   onboarding: {
     selectLanguage: 'Choisissez votre langue',
+    back: 'Retour',
+    continue: 'Continuer',
+    getStarted: 'Commencer',
+    slide1Title: 'Réfléchir avec intention',
+    slide1Subtitle: 'Prenez un moment chaque jour pour réfléchir à vos actions, intentions et croissance spirituelle.',
+    slide2Title: 'Définir des intentions profondes',
+    slide2Subtitle: 'Créez des objectifs personnels pour la prière, le Coran, l\'apprentissage, la charité et d\'autres actes d\'adoration.',
+    slide3Title: 'Grandir par la constance',
+    slide3Subtitle: 'Suivez vos progrès dans le temps et construisez des habitudes durables grâce à des actions petites et cohérentes.',
   },
   calendar: {
     hijri: 'Hégirien',
