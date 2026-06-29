@@ -5,6 +5,7 @@ import {
   Platform,
   StyleSheet,
   View,
+  type ViewStyle,
   ViewToken,
 } from "react-native";
 import { useTranslation } from "react-i18next";
@@ -12,6 +13,7 @@ import Animated, {
   interpolateColor,
   useAnimatedStyle,
   useSharedValue,
+  withDelay,
   withTiming,
 } from "react-native-reanimated";
 
@@ -61,123 +63,89 @@ function AnimatedDot({ active }: Readonly<{ active: boolean }>) {
   return <Animated.View style={[styles.dot, animatedStyle]} />;
 }
 
-function ReflectBackground() {
+function AnimatedShape({
+  active,
+  delay = 0,
+  rotate,
+  fromX = 0,
+  fromY = 0,
+  shapeStyle,
+}: Readonly<{
+  active: boolean;
+  delay?: number;
+  rotate: string;
+  fromX?: number;
+  fromY?: number;
+  shapeStyle: Omit<ViewStyle, "transform">;
+}>) {
+  const progress = useSharedValue(0);
+
+  useEffect(() => {
+    progress.value = withDelay(
+      delay,
+      withTiming(active ? 1 : 0, { duration: 500 }),
+    );
+  }, [active, delay, progress]);
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    opacity: progress.value,
+    transform: [
+      { rotate },
+      { translateX: fromX * (1 - progress.value) },
+      { translateY: fromY * (1 - progress.value) },
+    ],
+  }));
+
+  return <Animated.View style={[styles.shape, shapeStyle, animatedStyle]} />;
+}
+
+function ReflectBackground({ active }: Readonly<{ active: boolean }>) {
   return (
-    <View
-      style={[
-        styles.shape,
-        {
-          width: 100,
-          height: 100,
-          top: "22%",
-          alignSelf: "center",
-          transform: [{ rotate: "27deg" }],
-          backgroundColor: Palette.primary,
-        },
-      ]}
+    <AnimatedShape
+      active={active}
+      rotate="27deg"
+      fromY={60}
+      shapeStyle={{ width: 100, height: 100, top: "22%", alignSelf: "center", backgroundColor: Palette.primary }}
     />
   );
 }
 
-function IntentionsBackground() {
+function IntentionsBackground({ active }: Readonly<{ active: boolean }>) {
   return (
     <>
-      <View
-        style={[
-          styles.shape,
-          {
-            width: 100,
-            height: 100,
-            top: "18%",
-            left: "8%",
-            transform: [{ rotate: "-10deg" }],
-            backgroundColor: Palette.primaryShade1,
-            borderWidth: 1,
-            borderColor: Palette.secondaryTint,
-          },
-        ]}
+      <AnimatedShape active={active} delay={0} rotate="-10deg" fromX={-50} fromY={30}
+        shapeStyle={{ width: 100, height: 100, top: "18%", left: "8%", backgroundColor: Palette.primaryShade1, borderWidth: 1, borderColor: Palette.secondaryTint }}
       />
-      <View
-        style={[
-          styles.shape,
-          {
-            width: 100,
-            height: 100,
-            top: "22%",
-            left: "28%",
-            transform: [{ rotate: "13deg" }],
-            backgroundColor: Palette.base600,
-          },
-        ]}
+      <AnimatedShape active={active} delay={80} rotate="13deg" fromY={50}
+        shapeStyle={{ width: 100, height: 100, top: "22%", left: "28%", backgroundColor: Palette.base600 }}
       />
-      <View
-        style={[
-          styles.shape,
-          {
-            width: 100,
-            height: 100,
-            top: "18%",
-            right: "30%",
-            transform: [{ rotate: "-14deg" }],
-            backgroundColor: Palette.primaryShade4,
-          },
-        ]}
+      <AnimatedShape active={active} delay={160} rotate="-14deg" fromY={40}
+        shapeStyle={{ width: 100, height: 100, top: "18%", right: "30%", backgroundColor: Palette.primaryShade4 }}
       />
-      <View
-        style={[
-          styles.shape,
-          {
-            width: 100,
-            height: 100,
-            top: "22%",
-            right: "8%",
-            transform: [{ rotate: "13deg" }],
-            backgroundColor: Palette.primary,
-          },
-        ]}
+      <AnimatedShape active={active} delay={240} rotate="13deg" fromX={50} fromY={30}
+        shapeStyle={{ width: 100, height: 100, top: "22%", right: "8%", backgroundColor: Palette.primary }}
       />
     </>
   );
 }
 
-function ConsistencyBackground() {
+function ConsistencyBackground({ active }: Readonly<{ active: boolean }>) {
   return (
     <>
-      <View
-        style={[
-          styles.shape,
-          {
-            width: 210,
-            height: 210,
-            top: -30,
-            left: -60,
-            transform: [{ rotate: "50deg" }],
-            backgroundColor: Palette.primaryShade1,
-            borderRadius: 32,
-            borderWidth: 1,
-            borderColor: Palette.secondaryTint,
-          },
-        ]}
+      <AnimatedShape active={active} delay={0} rotate="50deg" fromX={-60} fromY={-40}
+        shapeStyle={{ width: 210, height: 210, top: -30, left: -60, backgroundColor: Palette.primaryShade1, borderWidth: 1, borderColor: Palette.secondaryTint }}
       />
-      <View
-        style={[
-          styles.shape,
-          {
-            width: 190,
-            height: 190,
-            top: "10%",
-            right: "-7%",
-            transform: [{ rotate: "-47deg" }],
-            backgroundColor: Palette.primary,
-            borderRadius: 32,
-          },
-        ]}
+      <AnimatedShape active={active} delay={120} rotate="-47deg" fromX={60} fromY={-30}
+        shapeStyle={{ width: 190, height: 190, top: "10%", right: "-7%", backgroundColor: Palette.primary }}
       />
     </>
   );
 }
 
-const ILLUSTRATIONS: Record<SlideKey, () => React.JSX.Element> = {
+const ILLUSTRATIONS: Record<
+  SlideKey,
+  (props: { active: boolean }) => React.JSX.Element
+> = {
   reflect: ReflectBackground,
   intentions: IntentionsBackground,
   consistency: ConsistencyBackground,
@@ -186,13 +154,14 @@ const ILLUSTRATIONS: Record<SlideKey, () => React.JSX.Element> = {
 function OnboardingSlide({
   slideKey,
   height,
-}: Readonly<{ slideKey: SlideKey; height: number }>) {
+  active,
+}: Readonly<{ slideKey: SlideKey; height: number; active: boolean }>) {
   const { t } = useTranslation();
   const Background = ILLUSTRATIONS[slideKey];
 
   return (
     <View style={[styles.slide, { height }]}>
-      <Background />
+      <Background active={active} />
       <View style={styles.textBlock}>
         <ThemedText type="subtitle" style={styles.title}>
           {t(SLIDE_MAP[slideKey].title)}
@@ -266,8 +235,9 @@ export default function OnboardingScreen() {
           <FlatList
             ref={listRef}
             data={SLIDE_KEYS}
-            renderItem={({ item }) => (
-              <OnboardingSlide slideKey={item} height={slideHeight} />
+            extraData={activeIndex}
+            renderItem={({ item, index }) => (
+              <OnboardingSlide slideKey={item} height={slideHeight} active={index === activeIndex} />
             )}
             keyExtractor={(item) => item}
             horizontal
