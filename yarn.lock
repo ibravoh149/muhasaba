@@ -680,6 +680,11 @@
   resolved "https://registry.yarnpkg.com/@expo-google-fonts/dm-sans/-/dm-sans-0.4.2.tgz#76b73ba806c24f5b4188127485162603fb67de62"
   integrity sha512-e/fLH5aCJzkEenz7axvEn8N7IJAKhUwNjIxS75h9j+Ip1M9S7d22M19gJN3A7QW4egVkBJRyQh1hQFhngQn9yA==
 
+"@expo-google-fonts/madimi-one@^0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@expo-google-fonts/madimi-one/-/madimi-one-0.4.0.tgz#82de3ccbf7ca2b0aae46250b955ba68957e2146b"
+  integrity sha512-gc2KxsBj6WorT+rVPM/K/LXQK7YN93wv9clHjqtlTZAaFPk8qzdbrmIUjC/kCbj1Dk2NKloFj2zbRYKvOPlLxw==
+
 "@expo-google-fonts/material-symbols@^0.4.1":
   version "0.4.38"
   resolved "https://registry.yarnpkg.com/@expo-google-fonts/material-symbols/-/material-symbols-0.4.38.tgz#88982312fb1a2ff18cd002874aaa9bbee0157727"
