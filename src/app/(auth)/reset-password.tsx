@@ -10,15 +10,16 @@ import { AuthBackground } from '@/components/auth-background';
 import { AuthInput } from '@/components/auth-input';
 import { ThemedButton } from '@/components/themed-button';
 import { ThemedText } from '@/components/themed-text';
-import { Fonts, FontSizes, LineHeights, Palette, Spacing } from '@/constants/theme';
+import { FontSizes, LineHeights, Palette, Spacing } from '@/constants/theme';
 
-export default function ForgotPasswordScreen() {
+export default function ResetPasswordScreen() {
   const router = useRouter();
   const { t } = useTranslation();
-  const [email, setEmail] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
-  function handleSend() {
-    router.replace({ pathname: '/(auth)/email-sent', params: { email } });
+  function handleReset() {
+    router.replace('/(auth)/reset-success');
   }
 
   return (
@@ -42,34 +43,37 @@ export default function ForgotPasswordScreen() {
           <View style={styles.content}>
             <View style={styles.heading}>
               <ThemedText type="subtitle" style={styles.title}>
-                {t('auth.forgotPasswordTitle')}
+                {t('auth.createNewPassword')}
               </ThemedText>
               <ThemedText style={styles.subtitle}>
-                {t('auth.forgotPasswordSubtitle')}
+                {t('auth.createNewPasswordSubtitle')}
               </ThemedText>
             </View>
 
-            <AuthInput
-              label={t('auth.emailAddress')}
-              placeholder="you@example.com"
-              value={email}
-              onChangeText={setEmail}
-              keyboardType="email-address"
-              textContentType="emailAddress"
-            />
+            <View style={styles.form}>
+              <AuthInput
+                label={t('auth.newPassword')}
+                placeholder="••••••••"
+                value={newPassword}
+                onChangeText={setNewPassword}
+                secureTextEntry
+                textContentType="newPassword"
+              />
+              <AuthInput
+                label={t('auth.confirmPassword')}
+                placeholder="••••••••"
+                value={confirmPassword}
+                onChangeText={setConfirmPassword}
+                secureTextEntry
+                textContentType="newPassword"
+              />
+            </View>
 
             <ThemedButton
-              label={t('auth.sendResetLink')}
-              onPress={handleSend}
-              disabled={!email.trim()}
+              label={t('auth.resetPassword')}
+              onPress={handleReset}
+              disabled={!newPassword || !confirmPassword}
             />
-
-            <View style={styles.linkRow}>
-              <ThemedText style={styles.linkText}>{t('auth.rememberPassword')}</ThemedText>
-              <Pressable onPress={() => router.back()} hitSlop={8}>
-                <ThemedText style={styles.link}>{t('auth.logIn')}</ThemedText>
-              </Pressable>
-            </View>
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
@@ -112,19 +116,7 @@ const styles = StyleSheet.create({
     fontSize: FontSizes.sm,
     lineHeight: LineHeights.sm * 1.6,
   },
-  linkRow: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    gap: 4,
-  },
-  linkText: {
-    color: Palette.base400,
-    fontSize: FontSizes.sm,
-  },
-  link: {
-    color: Palette.accent,
-    fontSize: FontSizes.sm,
-    fontFamily: Fonts.semiBold,
+  form: {
+    gap: Spacing.md,
   },
 });
