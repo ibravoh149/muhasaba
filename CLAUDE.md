@@ -9,6 +9,7 @@
 ## i18n
 - All visible text in the app must use `t()` from `react-i18next` — no hardcoded strings in components
 - Every new string must have a key added to `en`, `ar`, `de`, and `fr` locale files
+- Whenever `en.ts` is updated, always scan all locale files and keep `ar`, `de`, and `fr` in sync — no missing keys
 - Do not update `ha`, `yo`, or `ig` locale files until explicitly asked
 
 ## Code
