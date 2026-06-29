@@ -1,8 +1,8 @@
 import '@/i18n';
 
 import { useEffect } from 'react';
-import { useColorScheme } from 'react-native';
-import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import { useColorScheme, View } from 'react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { useFonts } from 'expo-font';
 import { DarkTheme, DefaultTheme, Slot, ThemeProvider } from 'expo-router';
@@ -18,7 +18,6 @@ import {
 import { MadimiOne_400Regular } from '@expo-google-fonts/madimi-one';
 
 import { AnimatedSplashOverlay } from '@/components/animated-icon';
-import { Colors } from '@/constants/theme';
 import { AuthProvider, useAuth } from '@/context/auth';
 import { LanguageProvider } from '@/context/language';
 
@@ -52,7 +51,7 @@ export default function RootLayout() {
 
   return (
     <SafeAreaProvider>
-      <SafeAreaView style={{ flex: 1, backgroundColor: Colors[colorScheme === 'light' ? 'light' : 'dark'].background }}>
+      <View style={{ flex: 1 }}>
         <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
           <LanguageProvider>
             <AuthProvider>
@@ -61,7 +60,7 @@ export default function RootLayout() {
             </AuthProvider>
           </LanguageProvider>
         </ThemeProvider>
-      </SafeAreaView>
+      </View>
     </SafeAreaProvider>
   );
 }

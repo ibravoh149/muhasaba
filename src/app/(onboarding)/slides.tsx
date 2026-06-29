@@ -216,7 +216,7 @@ export default function OnboardingScreen() {
 
   async function handleFinish() {
     await completeOnboarding();
-    router.replace("/(auth)/login");
+    router.replace("/(auth)/get-started");
   }
 
   const isFirst = activeIndex === 0;

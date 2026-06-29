@@ -8,7 +8,7 @@ export default function OnboardingLayout() {
 
   if (isLoading) return null;
   if (hasOnboarded && accessToken) return <Redirect href="/(tabs)" />;
-  if (hasOnboarded && !accessToken) return <Redirect href="/(auth)/login" />;
+  if (hasOnboarded && !accessToken) return <Redirect href="/(auth)/get-started" />;
 
   return (
     <Stack
