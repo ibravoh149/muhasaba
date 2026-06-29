@@ -16,7 +16,8 @@ export default {
     signOut: 'تسجيل الخروج',
   },
   onboarding: {
-    selectLanguage: 'اختر لغتك',
+    selectLanguage: 'اختر لغتك المفضلة.',
+    languageHint: 'يمكنك تغيير هذا في أي وقت من الإعدادات.',
     back: 'رجوع',
     continue: 'متابعة',
     getStarted: 'ابدأ الآن',

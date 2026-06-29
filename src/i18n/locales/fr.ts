@@ -16,7 +16,8 @@ export default {
     signOut: 'Se déconnecter',
   },
   onboarding: {
-    selectLanguage: 'Choisissez votre langue',
+    selectLanguage: 'Choisissez votre langue préférée.',
+    languageHint: 'Vous pouvez modifier cela à tout moment dans les paramètres.',
     back: 'Retour',
     continue: 'Continuer',
     getStarted: 'Commencer',
