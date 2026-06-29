@@ -41,14 +41,14 @@ async function applyLanguage(lang: SupportedLanguage) {
 }
 
 export function LanguageProvider({ children }: Readonly<{ children: React.ReactNode }>) {
-  const [language, setLanguageState] = useState<SupportedLanguage>('en');
+  const [language, setLanguage] = useState<SupportedLanguage>('en');
 
   useEffect(() => {
     async function init() {
       const stored = await AsyncStorage.getItem(LANGUAGE_KEY);
       const resolved = isSupportedLanguage(stored ?? '') ? (stored as SupportedLanguage) : resolveDeviceLanguage();
       await applyLanguage(resolved);
-      setLanguageState(resolved);
+      setLanguage(resolved);
     }
     init();
   }, []);
@@ -59,7 +59,7 @@ export function LanguageProvider({ children }: Readonly<{ children: React.ReactN
       setLanguage: async (lang) => {
         await AsyncStorage.setItem(LANGUAGE_KEY, lang);
         await applyLanguage(lang);
-        setLanguageState(lang);
+        setLanguage(lang);
       },
     }),
     [language],

@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useMemo, useReducer } from 'react';
 import { Platform } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import * as SecureStore from 'expo-secure-store';
 
@@ -14,41 +15,54 @@ type AuthState = {
   accessToken: string | null;
   isLoading: boolean;
   error: string | null;
+  hasOnboarded: boolean;
 };
 
 type AuthAction =
-  | { type: 'RESTORE_TOKEN'; accessToken: string; user: User }
-  | { type: 'RESTORE_FAILED' }
+  | { type: 'RESTORE_TOKEN'; accessToken: string; user: User; hasOnboarded: boolean }
+  | { type: 'RESTORE_FAILED'; hasOnboarded: boolean }
   | { type: 'SIGN_IN'; accessToken: string; user: User }
   | { type: 'SIGN_IN_FAILURE'; error: string }
+  | { type: 'COMPLETE_ONBOARDING' }
   | { type: 'SIGN_OUT' };
 
 type AuthContextValue = AuthState & {
   signIn: (accessToken: string, refreshToken: string, user: User) => Promise<void>;
   signOut: () => Promise<void>;
+  completeOnboarding: () => Promise<void>;
 };
 
 const REFRESH_TOKEN_KEY = 'refresh_token';
+const ONBOARDING_KEY = 'onboarding_complete';
 
 const initialState: AuthState = {
   user: null,
   accessToken: null,
   isLoading: true,
   error: null,
+  hasOnboarded: false,
 };
 
 function authReducer(state: AuthState, action: AuthAction): AuthState {
   switch (action.type) {
     case 'RESTORE_TOKEN':
-      return { ...state, accessToken: action.accessToken, user: action.user, isLoading: false };
+      return {
+        ...state,
+        accessToken: action.accessToken,
+        user: action.user,
+        hasOnboarded: action.hasOnboarded,
+        isLoading: false,
+      };
     case 'RESTORE_FAILED':
-      return { ...initialState, isLoading: false };
+      return { ...initialState, hasOnboarded: action.hasOnboarded, isLoading: false };
     case 'SIGN_IN':
-      return { user: action.user, accessToken: action.accessToken, isLoading: false, error: null };
+      return { ...state, user: action.user, accessToken: action.accessToken, isLoading: false, error: null };
     case 'SIGN_IN_FAILURE':
       return { ...state, isLoading: false, error: action.error };
+    case 'COMPLETE_ONBOARDING':
+      return { ...state, hasOnboarded: true };
     case 'SIGN_OUT':
-      return { ...initialState, isLoading: false };
+      return { ...initialState, hasOnboarded: state.hasOnboarded, isLoading: false };
   }
 }
 
@@ -75,19 +89,24 @@ export function AuthProvider({ children }: Readonly<{ children: React.ReactNode 
   useEffect(() => {
     async function restoreSession() {
       try {
-        const refreshToken = await loadRefreshToken();
+        const [refreshToken, onboarded] = await Promise.all([
+          loadRefreshToken(),
+          AsyncStorage.getItem(ONBOARDING_KEY),
+        ]);
+        const hasOnboarded = onboarded === 'true';
+
         if (!refreshToken) {
-          dispatch({ type: 'RESTORE_FAILED' });
+          dispatch({ type: 'RESTORE_FAILED', hasOnboarded });
           return;
         }
 
-        // TODO: call your refresh endpoint with refreshToken
+        // call your refresh endpoint here, then:
         // const { accessToken, user } = await api.refresh(refreshToken);
-        // dispatch({ type: 'RESTORE_TOKEN', accessToken, user });
+        // dispatch({ type: 'RESTORE_TOKEN', accessToken, user, hasOnboarded });
 
-        dispatch({ type: 'RESTORE_FAILED' });
+        dispatch({ type: 'RESTORE_FAILED', hasOnboarded });
       } catch {
-        dispatch({ type: 'RESTORE_FAILED' });
+        dispatch({ type: 'RESTORE_FAILED', hasOnboarded: false });
       }
     }
 
@@ -105,7 +124,10 @@ export function AuthProvider({ children }: Readonly<{ children: React.ReactNode 
         await deleteRefreshToken();
         dispatch({ type: 'SIGN_OUT' });
       },
-      
+      completeOnboarding: async () => {
+        await AsyncStorage.setItem(ONBOARDING_KEY, 'true');
+        dispatch({ type: 'COMPLETE_ONBOARDING' });
+      },
     }),
     [state],
   );
