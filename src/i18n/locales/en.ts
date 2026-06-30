@@ -69,6 +69,12 @@ export default {
     slide3Title: 'Grow Through Consistency',
     slide3Subtitle: 'Track your progress over time and build lasting habits through small, consistent actions.',
   },
+  validation: {
+    required: 'This field is required',
+    invalidEmail: 'Please enter a valid email address',
+    passwordTooShort: 'Password must be at least 8 characters',
+    passwordsMustMatch: 'Passwords must match',
+  },
   calendar: {
     hijri: 'Hijri',
     gregorian: 'Gregorian',

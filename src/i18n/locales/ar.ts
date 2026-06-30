@@ -69,6 +69,12 @@ export default {
     slide3Title: 'انمُ من خلال الاستمرارية',
     slide3Subtitle: 'تتبع تقدمك بمرور الوقت وبنِ عادات دائمة من خلال أعمال صغيرة ومتسقة.',
   },
+  validation: {
+    required: 'هذا الحقل مطلوب',
+    invalidEmail: 'يرجى إدخال بريد إلكتروني صحيح',
+    passwordTooShort: 'يجب أن تتكون كلمة المرور من 8 أحرف على الأقل',
+    passwordsMustMatch: 'كلمتا المرور غير متطابقتين',
+  },
   calendar: {
     hijri: 'هجري',
     gregorian: 'ميلادي',

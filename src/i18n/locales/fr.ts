@@ -69,6 +69,12 @@ export default {
     slide3Title: 'Grandir par la constance',
     slide3Subtitle: 'Suivez vos progrès dans le temps et construisez des habitudes durables grâce à des actions petites et cohérentes.',
   },
+  validation: {
+    required: 'Ce champ est obligatoire',
+    invalidEmail: 'Veuillez entrer une adresse e-mail valide',
+    passwordTooShort: 'Le mot de passe doit contenir au moins 8 caractères',
+    passwordsMustMatch: 'Les mots de passe doivent correspondre',
+  },
   calendar: {
     hijri: 'Hégirien',
     gregorian: 'Grégorien',

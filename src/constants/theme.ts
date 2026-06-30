@@ -20,6 +20,7 @@ export const Palette = {
   base700: "#364153",
   base800: "#1E2939",
   white: "#E6F1F1",
+  black: "#000000",
 } as const;
 
 export const Colors = {
@@ -31,6 +32,7 @@ export const Colors = {
     backgroundSelected: Palette.secondaryTint,
     primary: Palette.primary,
     accent: Palette.accent,
+    black: Palette.black,
   },
   dark: {
     text: Palette.white,
@@ -40,6 +42,8 @@ export const Colors = {
     backgroundSelected: Palette.secondaryTint,
     primary: Palette.primary,
     accent: Palette.accent,
+    black: Palette.black,
+
   },
 } as const;
 

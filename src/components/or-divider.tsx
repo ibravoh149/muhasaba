@@ -4,7 +4,7 @@ import { FontSizes, Palette, Spacing } from '@/constants/theme';
 
 import { ThemedText } from './themed-text';
 
-export function OrDivider({ label = 'or' }: { label?: string }) {
+export function OrDivider({ label = 'or' }: Readonly<{ label?: string }>) {
   return (
     <View style={styles.container}>
       <View style={styles.line} />
@@ -27,6 +27,6 @@ const styles = StyleSheet.create({
   },
   label: {
     color: Palette.base500,
-    fontSize: FontSizes.sm,
+    fontSize: FontSizes.md,
   },
 });

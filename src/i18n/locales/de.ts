@@ -69,6 +69,12 @@ export default {
     slide3Title: 'Durch Beständigkeit wachsen',
     slide3Subtitle: 'Verfolge deinen Fortschritt im Laufe der Zeit und baue dauerhafte Gewohnheiten durch kleine, konsequente Handlungen auf.',
   },
+  validation: {
+    required: 'Dieses Feld ist erforderlich',
+    invalidEmail: 'Bitte gib eine gültige E-Mail-Adresse ein',
+    passwordTooShort: 'Das Passwort muss mindestens 8 Zeichen lang sein',
+    passwordsMustMatch: 'Die Passwörter müssen übereinstimmen',
+  },
   calendar: {
     hijri: 'Hijri',
     gregorian: 'Gregorianisch',
