@@ -55,6 +55,8 @@ export default {
     passwordUpdated: 'Passwort aktualisiert',
     passwordUpdatedSubtitle: 'Dein Passwort wurde erfolgreich zurückgesetzt. Du kannst dich jetzt mit deinem neuen Passwort anmelden.',
     goToLogin: 'Zum Login',
+    socialAuthFailed: 'Anmeldung fehlgeschlagen',
+    emailAlreadyExists: 'Mit dieser E-Mail existiert bereits ein Konto. Versuche dich stattdessen anzumelden.',
   },
   onboarding: {
     selectLanguage: 'Wähle deine bevorzugte Sprache.',

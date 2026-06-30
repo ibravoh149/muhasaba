@@ -1,4 +1,4 @@
-import { Pressable, ScrollView, StyleSheet, View } from "react-native";
+import { Alert, Pressable, ScrollView, StyleSheet, View } from "react-native";
 import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
@@ -10,7 +10,7 @@ import { z } from "zod";
 
 import { AuthBackground } from "@/components/auth-background";
 import { OrDivider } from "@/components/or-divider";
-import { SocialAuth } from "@/components/social-auth";
+import { SocialAuth, type SocialAuthTokens } from "@/components/social-auth";
 import { ThemedButton } from "@/components/themed-button";
 import { ThemedInput } from "@/components/themed-input";
 import { ThemedText } from "@/components/themed-text";
@@ -23,16 +23,18 @@ const schema = z.object({
 
 type FormValues = z.infer<typeof schema>;
 
-function handleSocialAuth(tokens: {
-  access_token: string;
-  refresh_token: string;
-}) {
-  console.log(tokens);
-}
-
 export default function LoginScreen() {
   const router = useRouter();
   const { t } = useTranslation();
+
+  function handleSocialAuth(tokens: SocialAuthTokens) {
+    console.log(tokens);
+    router.replace(tokens.onboarding_completed ? '/(tabs)' : '/(onboarding)');
+  }
+
+  function handleSocialError(error: string) {
+    Alert.alert(t('auth.socialAuthFailed'), t(error as never));
+  }
 
   const {
     control,
@@ -76,7 +78,7 @@ export default function LoginScreen() {
           </View>
 
           <View style={styles.form}>
-            <SocialAuth onSuccess={handleSocialAuth} />
+            <SocialAuth onSuccess={handleSocialAuth} onError={handleSocialError} />
           </View>
 
           <OrDivider label={t("auth.or")} />

@@ -55,6 +55,8 @@ export default {
     passwordUpdated: 'Password Updated',
     passwordUpdatedSubtitle: 'Your password has been successfully reset. You can now log in with your new password.',
     goToLogin: 'Go to Login',
+    socialAuthFailed: 'Sign in failed',
+    emailAlreadyExists: 'An account with this email already exists. Try logging in instead.',
   },
   onboarding: {
     selectLanguage: 'Choose your preferred language.',

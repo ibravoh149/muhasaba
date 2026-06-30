@@ -55,6 +55,8 @@ export default {
     passwordUpdated: 'تم تحديث كلمة المرور',
     passwordUpdatedSubtitle: 'تمت إعادة تعيين كلمة مرورك بنجاح. يمكنك الآن تسجيل الدخول بكلمة المرور الجديدة.',
     goToLogin: 'الذهاب إلى تسجيل الدخول',
+    socialAuthFailed: 'فشل تسجيل الدخول',
+    emailAlreadyExists: 'يوجد حساب بهذا البريد الإلكتروني بالفعل. حاول تسجيل الدخول بدلاً من ذلك.',
   },
   onboarding: {
     selectLanguage: 'اختر لغتك المفضلة.',

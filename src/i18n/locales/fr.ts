@@ -55,6 +55,8 @@ export default {
     passwordUpdated: 'Mot de passe mis à jour',
     passwordUpdatedSubtitle: 'Votre mot de passe a été réinitialisé avec succès. Vous pouvez maintenant vous connecter avec votre nouveau mot de passe.',
     goToLogin: 'Aller à la connexion',
+    socialAuthFailed: 'Échec de la connexion',
+    emailAlreadyExists: 'Un compte avec cet e-mail existe déjà. Essayez de vous connecter à la place.',
   },
   onboarding: {
     selectLanguage: 'Choisissez votre langue préférée.',
