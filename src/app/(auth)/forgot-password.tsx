@@ -1,4 +1,5 @@
-import { Pressable, ScrollView, StyleSheet, View } from "react-native";
+import { useState } from "react";
+import { Alert, Pressable, ScrollView, StyleSheet, View } from "react-native";
 import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
@@ -19,6 +20,8 @@ import {
   Palette,
   Spacing,
 } from "@/constants/theme";
+import { api } from "@/lib/api";
+import { getApiError } from "@/lib/api-error";
 
 const schema = z.object({
   email: z.email({ message: "validation.invalidEmail" }),
@@ -29,6 +32,7 @@ type FormValues = z.infer<typeof schema>;
 export default function ForgotPasswordScreen() {
   const router = useRouter();
   const { t } = useTranslation();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const {
     control,
@@ -40,8 +44,16 @@ export default function ForgotPasswordScreen() {
     reValidateMode: "onChange",
   });
 
-  function onSubmit({ email }: FormValues) {
-    router.replace({ pathname: "/(auth)/email-sent", params: { email } });
+  async function onSubmit({ email }: FormValues) {
+    setIsSubmitting(true);
+    try {
+      await api.post('/auth/request-password-reset', { email });
+      router.replace({ pathname: "/(auth)/email-sent", params: { email } });
+    } catch (e) {
+      Alert.alert(t('common.error'), t(getApiError(e) as never));
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (
@@ -90,6 +102,7 @@ export default function ForgotPasswordScreen() {
             <ThemedButton
               label={t("auth.sendResetLink")}
               onPress={handleSubmit(onSubmit)}
+              disabled={isSubmitting}
             />
 
             <View style={styles.linkRow}>

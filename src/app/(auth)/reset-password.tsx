@@ -1,8 +1,9 @@
-import { Pressable, ScrollView, StyleSheet, View } from "react-native";
+import { useState } from "react";
+import { Alert, Pressable, ScrollView, StyleSheet, View } from "react-native";
 import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
-import { useRouter } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 
 import { Ionicons } from "@expo/vector-icons";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -13,6 +14,8 @@ import { ThemedButton } from "@/components/themed-button";
 import { ThemedInput } from "@/components/themed-input";
 import { ThemedText } from "@/components/themed-text";
 import { FontSizes, LineHeights, Palette, Spacing } from "@/constants/theme";
+import { api } from "@/lib/api";
+import { getApiError } from "@/lib/api-error";
 
 const schema = z
   .object({
@@ -29,6 +32,8 @@ type FormValues = z.infer<typeof schema>;
 export default function ResetPasswordScreen() {
   const router = useRouter();
   const { t } = useTranslation();
+  const { token } = useLocalSearchParams<{ token: string }>();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const {
     control,
@@ -40,8 +45,16 @@ export default function ResetPasswordScreen() {
     reValidateMode: "onChange",
   });
 
-  function onSubmit(_data: FormValues) {
-    router.replace("/(auth)/reset-success");
+  async function onSubmit({ newPassword }: FormValues) {
+    setIsSubmitting(true);
+    try {
+      await api.patch('/auth/password-reset', { token, password: newPassword });
+      router.replace("/(auth)/reset-success");
+    } catch (e:unknown) {
+      Alert.alert(t('common.error'), t(getApiError(e) as never));
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (
@@ -104,6 +117,7 @@ export default function ResetPasswordScreen() {
           <ThemedButton
             label={t("auth.resetPassword")}
             onPress={handleSubmit(onSubmit)}
+            disabled={isSubmitting}
           />
         </View>
       </ScrollView>

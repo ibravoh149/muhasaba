@@ -53,12 +53,9 @@ export default function EmailSentScreen() {
           <View style={styles.actions}>
             <View style={styles.actions}>
               <ThemedButton
-                label={t("auth.resendLink")}
-                variant="ghost"
-                onPress={() => {}}
-                labelStyle={{ color: Palette.white }}
+                label={t("auth.openEmailApp")}
+                onPress={() => Linking.openURL("mailto:")}
               />
-              <ThemedButton label={t("auth.openEmailApp")} onPress={() => Linking.openURL('mailto:')} />
             </View>
 
             <View style={styles.linkRow}>
