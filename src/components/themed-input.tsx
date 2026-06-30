@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Pressable, StyleSheet, TextInput, type TextInputProps, View, type ViewStyle } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 import { Ionicons } from '@expo/vector-icons';
 
@@ -7,25 +8,38 @@ import { BorderRadius, Fonts, FontSizes, Palette, Spacing } from '@/constants/th
 
 import { ThemedText } from './themed-text';
 
-type AuthInputProps = TextInputProps & {
+type ThemedInputProps = TextInputProps & {
   label?: string;
   containerStyle?: ViewStyle;
+  error?: string;
 };
 
-export function AuthInput({ label, secureTextEntry, containerStyle, style, ...rest }: AuthInputProps) {
+export function ThemedInput({
+  label,
+  secureTextEntry,
+  containerStyle,
+  style,
+  error,
+  onBlur,
+  ...rest
+}: ThemedInputProps) {
+  const { t } = useTranslation();
   const [focused, setFocused] = useState(false);
   const [hidden, setHidden] = useState(secureTextEntry ?? false);
 
   return (
     <View style={containerStyle}>
       {label ? <ThemedText style={styles.label}>{label}</ThemedText> : null}
-      <View style={[styles.row, focused && styles.rowFocused]}>
+      <View style={[styles.row, focused && styles.rowFocused, !!error && styles.rowError]}>
         <TextInput
           style={[styles.input, style]}
           placeholderTextColor={Palette.base500}
           secureTextEntry={hidden}
           onFocus={() => setFocused(true)}
-          onBlur={() => setFocused(false)}
+          onBlur={(e) => {
+            setFocused(false);
+            onBlur?.(e);
+          }}
           autoCapitalize="none"
           {...rest}
         />
@@ -39,6 +53,9 @@ export function AuthInput({ label, secureTextEntry, containerStyle, style, ...re
           </Pressable>
         ) : null}
       </View>
+      {error ? (
+        <ThemedText style={styles.error}>{t(error as never)}</ThemedText>
+      ) : null}
     </View>
   );
 }
@@ -55,13 +72,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: Palette.secondaryTint,
     borderRadius: BorderRadius.lg,
-    borderWidth: 1,
+    borderWidth: 0.5,
     borderColor: 'transparent',
     paddingHorizontal: Spacing.md,
     minHeight: 52,
   },
   rowFocused: {
-    borderColor: Palette.primary,
+    borderColor: Palette.accent,
+  },
+  rowError: {
+    borderColor: '#EF4444',
   },
   input: {
     flex: 1,
@@ -72,5 +92,10 @@ const styles = StyleSheet.create({
   },
   eyeBtn: {
     padding: Spacing.xs,
+  },
+  error: {
+    color: '#EF4444',
+    fontSize: FontSizes.xs,
+    marginTop: Spacing.xs,
   },
 });

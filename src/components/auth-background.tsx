@@ -1,62 +1,83 @@
-import { Image, StyleSheet, View } from 'react-native';
+import {
+  Image,
+  KeyboardAvoidingView,
+  Platform,
+  StyleSheet,
+  View,
+} from "react-native";
 
-import { LinearGradient } from 'expo-linear-gradient';
+import { LinearGradient } from "expo-linear-gradient";
 
-import { Palette } from '@/constants/theme';
+import { Palette } from "@/constants/theme";
 
 type AuthBackgroundProps = {
-  variant?: 'center' | 'right';
+  variant?: "center" | "right";
+  children?: React.ReactNode;
 };
 
-export function AuthBackground({ variant = 'right' }: AuthBackgroundProps) {
-  const isCenter = variant === 'center';
-
+export function AuthBackground({ children }: Readonly<AuthBackgroundProps>) {
   return (
-    <View pointerEvents="none" style={StyleSheet.absoluteFill}>
-      <LinearGradient
-        colors={[Palette.primary, Palette.background]}
-        locations={[0, 0.55]}
-        style={styles.gradient}
-      />
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={styles.container}
+    >
+      <View pointerEvents="none" style={StyleSheet.absoluteFill}>
+        <LinearGradient
+          colors={[Palette.primary, Palette.background]}
+          locations={[0, 0.7]}
+          style={styles.gradient}
+        />
 
-      {/* Circular glow behind the moon */}
-      <View style={[styles.glowContainer, isCenter ? styles.glowContainerCenter : styles.glowContainerRight]}>
-        <View style={styles.glow} />
-      </View>
+        <View style={[styles.moonContainer]}>
+          <Image
+            source={require("@/assets/images/cut-moon.png")}
+            style={[styles.moon]}
+            resizeMode="contain"
+          />
+        </View>
 
-      {/* Moon crescent image */}
-      <View style={[styles.moonContainer, isCenter ? styles.moonContainerCenter : styles.moonContainerRight]}>
-        <Image
-          source={require('@/assets/images/cut-moon.png')}
-          style={[styles.moon, isCenter ? styles.moonCenter : styles.moonRight]}
-          resizeMode="contain"
+        <LinearGradient
+          colors={[Palette.background, Palette.black]}
+          locations={[0.2, 1]}
+          style={{
+            position: "absolute",
+            bottom: 0,
+            left: 0,
+            right: 0,
+            height: "50%",
+          }}
         />
       </View>
-    </View>
+
+      {children}
+    </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: Palette.background,
+  },
   gradient: {
-    position: 'absolute',
+    position: "absolute",
     top: 0,
     left: 0,
     right: 0,
-    height: '60%',
+    height: "60%",
   },
   glowContainer: {
-    position: 'absolute',
+    position: "absolute",
     left: 0,
     right: 0,
-    alignItems: 'center',
+    alignItems: "center",
   },
   glowContainerCenter: {
     top: -60,
   },
   glowContainerRight: {
     top: -80,
-    alignItems: 'flex-end',
-    paddingRight: -40,
+    alignItems: "flex-end",
   },
   glow: {
     width: 300,
@@ -66,28 +87,23 @@ const styles = StyleSheet.create({
     marginRight: -60,
   },
   moonContainer: {
-    position: 'absolute',
+    position: "absolute",
     left: 0,
     right: 0,
-    alignItems: 'center',
+    alignItems: "center",
+    opacity: 0.1,
+    top: 100,
   },
   moonContainerCenter: {
     top: 24,
   },
   moonContainerRight: {
     top: -10,
-    alignItems: 'flex-end',
+    alignItems: "flex-end",
   },
   moon: {
-    position: 'relative',
-  },
-  moonCenter: {
-    width: 260,
-    height: 260,
-  },
-  moonRight: {
-    width: 220,
-    height: 220,
-    marginRight: -30,
+    position: "relative",
+    width: 292,
+    height: 314,
   },
 });

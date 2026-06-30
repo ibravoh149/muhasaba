@@ -1,116 +1,155 @@
-import { useState } from 'react';
-import { KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet, View } from 'react-native';
-import { useTranslation } from 'react-i18next';
+import { Pressable, ScrollView, StyleSheet, View } from "react-native";
+import { Controller, useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 
-import { useRouter } from 'expo-router';
+import { useRouter } from "expo-router";
 
-import { Ionicons } from '@expo/vector-icons';
-import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
+import { Ionicons } from "@expo/vector-icons";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 
-import { AuthBackground } from '@/components/auth-background';
-import { AuthInput } from '@/components/auth-input';
-import { OrDivider } from '@/components/or-divider';
-import { ThemedButton } from '@/components/themed-button';
-import { ThemedText } from '@/components/themed-text';
-import { BorderRadius, Fonts, FontSizes, Palette, Spacing } from '@/constants/theme';
+import { AuthBackground } from "@/components/auth-background";
+import { OrDivider } from "@/components/or-divider";
+import { SocialAuth } from "@/components/social-auth";
+import { ThemedButton } from "@/components/themed-button";
+import { ThemedInput } from "@/components/themed-input";
+import { ThemedText } from "@/components/themed-text";
+import { Fonts, FontSizes, Palette, Spacing } from "@/constants/theme";
 
-function SocialButton({ icon, label, onPress }: Readonly<{ icon: 'google' | 'facebook'; label: string; onPress: () => void }>) {
-  return (
-    <Pressable style={styles.socialBtn} onPress={onPress}>
-      <FontAwesome5
-        name={icon === 'google' ? 'google' : 'facebook-f'}
-        size={16}
-        color={Palette.white}
-      />
-      <ThemedText style={styles.socialLabel}>{label}</ThemedText>
-    </Pressable>
-  );
+const schema = z.object({
+  email: z.email({ message: "validation.invalidEmail" }),
+  password: z.string().min(1, { message: "validation.required" }),
+});
+
+type FormValues = z.infer<typeof schema>;
+
+function handleSocialAuth(tokens: {
+  access_token: string;
+  refresh_token: string;
+}) {
+  console.log(tokens);
 }
 
 export default function LoginScreen() {
   const router = useRouter();
   const { t } = useTranslation();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormValues>({
+    resolver: zodResolver(schema),
+    mode: "onSubmit",
+    reValidateMode: "onChange",
+  });
+
+  function onSubmit(_data: FormValues) {
+    // TODO: call auth API
+  }
 
   return (
-    <View style={styles.container}>
-      <AuthBackground variant="right" />
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={styles.kav}
+    <AuthBackground variant="right">
+      <ScrollView
+        contentContainerStyle={styles.scroll}
+        showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="handled"
       >
-        <ScrollView
-          contentContainerStyle={styles.scroll}
-          showsVerticalScrollIndicator={false}
-          keyboardShouldPersistTaps="handled"
+        <Pressable
+          onPress={() => router.back()}
+          style={styles.back}
+          hitSlop={8}
         >
-          <Pressable onPress={() => router.back()} style={styles.back} hitSlop={8}>
-            <Ionicons name="chevron-back" size={24} color={Palette.white} />
-          </Pressable>
+          <Ionicons name="chevron-back" size={24} color={Palette.white} />
+        </Pressable>
 
-          <View style={styles.moonSpacer} />
+        {/* <View style={styles.moonSpacer} /> */}
 
-          <View style={styles.content}>
-            <View style={styles.heading}>
-              <ThemedText type="subtitle" style={styles.title}>{t('auth.welcomeBack')}</ThemedText>
-              <ThemedText style={styles.subtitle}>{t('auth.welcomeSubtitle')}</ThemedText>
-            </View>
+        <View style={styles.content}>
+          <View style={styles.heading}>
+            <ThemedText type="subtitle" style={styles.title}>
+              {t("auth.welcomeBack")}
+            </ThemedText>
+            <ThemedText style={styles.subtitle}>
+              {t("auth.welcomeSubtitle")}
+            </ThemedText>
+          </View>
 
-            <View style={styles.form}>
-              <SocialButton icon="google" label={t('auth.continueWithGoogle')} onPress={() => {}} />
-              <SocialButton icon="facebook" label={t('auth.continueWithFacebook')} onPress={() => {}} />
-              <OrDivider label={t('auth.or')} />
-              <AuthInput
-                label={t('auth.emailAddress')}
-                placeholder="you@example.com"
-                value={email}
-                onChangeText={setEmail}
-                keyboardType="email-address"
-                textContentType="emailAddress"
-              />
-              <View style={styles.passwordBlock}>
-                <AuthInput
-                  label={t('auth.password')}
-                  placeholder="••••••••"
-                  value={password}
-                  onChangeText={setPassword}
-                  secureTextEntry
-                  textContentType="password"
+          <View style={styles.form}>
+            <SocialAuth onSuccess={handleSocialAuth} />
+          </View>
+
+          <OrDivider label={t("auth.or")} />
+
+          <View style={styles.form}>
+            <Controller
+              control={control}
+              name="email"
+              render={({ field: { onChange, onBlur, value } }) => (
+                <ThemedInput
+                  placeholder={t("auth.emailAddress")}
+                  value={value}
+                  onChangeText={onChange}
+                  onBlur={onBlur}
+                  error={errors.email?.message}
+                  keyboardType="email-address"
+                  textContentType="emailAddress"
                 />
-                <Pressable
-                  onPress={() => router.push('/(auth)/forgot-password')}
-                  style={styles.forgotRow}
-                  hitSlop={8}
-                >
-                  <ThemedText style={styles.forgot}>{t('auth.forgotPassword')}</ThemedText>
-                </Pressable>
-              </View>
-            </View>
-
-            <ThemedButton label={t('auth.logIn')} onPress={() => {}} />
-
-            <View style={styles.linkRow}>
-              <ThemedText style={styles.linkText}>{t('auth.noAccount')}</ThemedText>
-              <Pressable onPress={() => router.replace('/(auth)/register')} hitSlop={8}>
-                <ThemedText style={styles.link}>{t('auth.signUp')}</ThemedText>
+              )}
+            />
+            <View style={styles.passwordBlock}>
+              <Controller
+                control={control}
+                name="password"
+                render={({ field: { onChange, onBlur, value } }) => (
+                  <ThemedInput
+                    placeholder={t("auth.password")}
+                    value={value}
+                    onChangeText={onChange}
+                    onBlur={onBlur}
+                    error={errors.password?.message}
+                    secureTextEntry
+                    textContentType="password"
+                  />
+                )}
+              />
+              <Pressable
+                onPress={() => router.push("/(auth)/forgot-password")}
+                style={styles.forgotRow}
+                hitSlop={8}
+              >
+                <ThemedText style={styles.forgot}>
+                  {t("auth.forgotPassword")}
+                </ThemedText>
               </Pressable>
             </View>
           </View>
-        </ScrollView>
-      </KeyboardAvoidingView>
-    </View>
+
+          <View style={styles.form}>
+            <ThemedButton
+              label={t("auth.logIn")}
+              onPress={handleSubmit(onSubmit)}
+            />
+
+            <View style={styles.linkRow}>
+              <ThemedText style={styles.linkText}>
+                {t("auth.noAccount")}
+              </ThemedText>
+              <Pressable
+                onPress={() => router.replace("/(auth)/register")}
+                hitSlop={8}
+              >
+                <ThemedText style={styles.link}>{t("auth.signUp")}</ThemedText>
+              </Pressable>
+            </View>
+          </View>
+        </View>
+      </ScrollView>
+    </AuthBackground>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Palette.background,
-  },
-  kav: {
-    flex: 1,
-  },
   scroll: {
     flexGrow: 1,
     paddingHorizontal: Spacing.lg,
@@ -119,23 +158,27 @@ const styles = StyleSheet.create({
   back: {
     paddingTop: Spacing.md,
     paddingBottom: Spacing.xs,
-    alignSelf: 'flex-start',
+    alignSelf: "flex-start",
+    marginTop: Spacing.xxl,
+    marginBottom: Spacing.md,
   },
-  moonSpacer: {
-    height: 140,
-  },
+
   content: {
     gap: Spacing.lg,
+    flex: 1,
+    justifyContent: "space-between",
   },
   heading: {
     gap: Spacing.xs,
   },
   title: {
     fontSize: FontSizes.xl,
+    textAlign: "center",
   },
   subtitle: {
     color: Palette.base400,
-    fontSize: FontSizes.sm,
+    fontSize: FontSizes.md,
+    textAlign: "center",
   },
   form: {
     gap: Spacing.md,
@@ -144,42 +187,26 @@ const styles = StyleSheet.create({
     gap: Spacing.xs,
   },
   forgotRow: {
-    alignSelf: 'flex-end',
+    alignSelf: "flex-end",
   },
   forgot: {
     color: Palette.accent,
-    fontSize: FontSizes.sm,
-    fontFamily: Fonts.medium,
-  },
-  socialBtn: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: Spacing.sm,
-    backgroundColor: Palette.secondaryTint,
-    borderRadius: BorderRadius.lg,
-    borderWidth: 1,
-    borderColor: Palette.base700,
-    height: 52,
-  },
-  socialLabel: {
-    color: Palette.white,
-    fontFamily: Fonts.medium,
     fontSize: FontSizes.md,
+    fontFamily: Fonts.medium,
   },
   linkRow: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
     gap: 4,
   },
   linkText: {
     color: Palette.base400,
-    fontSize: FontSizes.sm,
+    fontSize: FontSizes.md,
   },
   link: {
     color: Palette.accent,
-    fontSize: FontSizes.sm,
+    fontSize: FontSizes.md,
     fontFamily: Fonts.semiBold,
   },
 });
