@@ -38,7 +38,11 @@ yarn-error.*
 .Trashes
 
 # local env files
+.env
 .env*.local
+
+# npm lock file (project uses yarn)
+package-lock.json
 
 # typescript
 *.tsbuildinfo

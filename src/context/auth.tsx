@@ -4,6 +4,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import * as SecureStore from 'expo-secure-store';
 
+import { setAccessToken, setOnUnauthorized } from '@/lib/api';
+
 export type User = {
   id: string;
   email: string;
@@ -85,6 +87,17 @@ const AuthContext = createContext<AuthContextValue | null>(null);
 
 export function AuthProvider({ children }: Readonly<{ children: React.ReactNode }>) {
   const [state, dispatch] = useReducer(authReducer, initialState);
+
+  useEffect(() => {
+    setOnUnauthorized(() => {
+      deleteRefreshToken().catch(() => {});
+      dispatch({ type: 'SIGN_OUT' });
+    });
+  }, []);
+
+  useEffect(() => {
+    setAccessToken(state.accessToken);
+  }, [state.accessToken]);
 
   useEffect(() => {
     async function restoreSession() {

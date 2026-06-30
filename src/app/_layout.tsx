@@ -16,10 +16,12 @@ import {
   DMSans_700Bold,
 } from '@expo-google-fonts/dm-sans';
 import { MadimiOne_400Regular } from '@expo-google-fonts/madimi-one';
+import { QueryClientProvider } from '@tanstack/react-query';
 
 import { AnimatedSplashOverlay } from '@/components/animated-icon';
 import { AuthProvider, useAuth } from '@/context/auth';
 import { LanguageProvider } from '@/context/language';
+import { queryClient } from '@/lib/query-client';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -50,17 +52,19 @@ export default function RootLayout() {
   });
 
   return (
-    <SafeAreaProvider>
-      <View style={{ flex: 1 }}>
-        <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-          <LanguageProvider>
-            <AuthProvider>
-              <SplashController fontsLoaded={fontsLoaded} />
-              <Slot />
-            </AuthProvider>
-          </LanguageProvider>
-        </ThemeProvider>
-      </View>
-    </SafeAreaProvider>
+    <QueryClientProvider client={queryClient}>
+      <SafeAreaProvider>
+        <View style={{ flex: 1 }}>
+          <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+            <LanguageProvider>
+              <AuthProvider>
+                <SplashController fontsLoaded={fontsLoaded} />
+                <Slot />
+              </AuthProvider>
+            </LanguageProvider>
+          </ThemeProvider>
+        </View>
+      </SafeAreaProvider>
+    </QueryClientProvider>
   );
 }
