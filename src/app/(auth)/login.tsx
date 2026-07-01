@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Alert, Pressable, ScrollView, StyleSheet, View } from "react-native";
 import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -15,6 +16,9 @@ import { ThemedButton } from "@/components/themed-button";
 import { ThemedInput } from "@/components/themed-input";
 import { ThemedText } from "@/components/themed-text";
 import { Fonts, FontSizes, Palette, Spacing } from "@/constants/theme";
+import { useAuth } from "@/context/auth";
+import { api, type TokenResponse } from "@/lib/api";
+import { getApiError } from "@/lib/api-error";
 
 const schema = z.object({
   email: z.email({ message: "validation.invalidEmail" }),
@@ -26,10 +30,12 @@ type FormValues = z.infer<typeof schema>;
 export default function LoginScreen() {
   const router = useRouter();
   const { t } = useTranslation();
+  const { signIn } = useAuth();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  function handleSocialAuth(tokens: SocialAuthTokens) {
-    console.log(tokens);
-    router.replace(tokens.onboarding_completed ? '/(tabs)' : '/(onboarding)');
+  async function handleSocialAuth(tokens: SocialAuthTokens) {
+    await signIn(tokens.access_token, tokens.refresh_token);
+    router.replace(tokens.onboarding_completed ? '/(tabs)' : '/(setup)');
   }
 
   function handleSocialError(error: string) {
@@ -46,8 +52,17 @@ export default function LoginScreen() {
     reValidateMode: "onChange",
   });
 
-  function onSubmit(_data: FormValues) {
-    // TODO: call auth API
+  async function onSubmit({ email, password }: FormValues) {
+    setIsSubmitting(true);
+    try {
+      const { data } = await api.post<TokenResponse>('/auth/login', { email, password });
+      await signIn(data.access_token, data.refresh_token);
+      router.replace(data.onboarding_completed ? '/(tabs)' : '/(setup)');
+    } catch (e) {
+      Alert.alert(t('common.error'), t(getApiError(e) as never));
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (
@@ -131,6 +146,7 @@ export default function LoginScreen() {
             <ThemedButton
               label={t("auth.logIn")}
               onPress={handleSubmit(onSubmit)}
+              disabled={isSubmitting}
             />
 
             <View style={styles.linkRow}>

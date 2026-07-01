@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
   },
   backgroundSolidColor: {
     ...StyleSheet.absoluteFill,
-    backgroundColor: "#208AEF",
+    backgroundColor: "#121A1A",
     zIndex: 1000,
   },
 });

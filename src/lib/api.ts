@@ -3,7 +3,7 @@ import * as SecureStore from 'expo-secure-store';
 import axios from 'axios';
 
 const BASE_URL = process.env.EXPO_PUBLIC_API_URL;
-const REFRESH_TOKEN_KEY = 'refresh_token';
+export const REFRESH_TOKEN_KEY = 'refresh_token';
 
 let _accessToken: string | null = null;
 let _onUnauthorized: (() => void) | null = null;
@@ -14,6 +14,21 @@ export function setAccessToken(token: string | null) {
 
 export function setOnUnauthorized(cb: () => void) {
   _onUnauthorized = cb;
+}
+
+export type TokenResponse = {
+  access_token: string;
+  refresh_token: string;
+  expires_in: number;
+  onboarding_completed: boolean;
+};
+
+// Used by auth context to refresh without triggering the response interceptor
+export async function refreshTokens(refreshToken: string): Promise<TokenResponse> {
+  const { data } = await axios.post<TokenResponse>(`${BASE_URL}/auth/refresh`, {
+    refresh_token: refreshToken,
+  });
+  return data;
 }
 
 export const api = axios.create({
@@ -45,6 +60,7 @@ api.interceptors.response.use(
         });
 
         setAccessToken(data.access_token);
+        await SecureStore.setItemAsync(REFRESH_TOKEN_KEY, data.refresh_token);
         original.headers.Authorization = `Bearer ${data.access_token}`;
         return api(original);
       } catch {

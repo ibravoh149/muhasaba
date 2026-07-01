@@ -19,7 +19,8 @@ import {
 export default function EmailSentScreen() {
   const router = useRouter();
   const { t } = useTranslation();
-  const { email } = useLocalSearchParams<{ email: string }>();
+  const { email, type } = useLocalSearchParams<{ email: string; type: 'verify' | 'reset' }>();
+  const isVerify = type === 'verify';
 
   return (
     <AuthBackground variant="center">
@@ -38,14 +39,14 @@ export default function EmailSentScreen() {
               {t("auth.checkYourEmail")}
             </ThemedText>
             <ThemedText style={styles.subtitle}>
-              {t("auth.emailSentTo")}
+              {t(isVerify ? "auth.verificationEmailSentTo" : "auth.emailSentTo")}
             </ThemedText>
             {email ? (
               <ThemedText style={styles.emailDisplay}>{email}</ThemedText>
             ) : null}
           </View>
           <ThemedText style={styles.subtitle}>
-            {t("auth.emailSentInstructions")}
+            {t(isVerify ? "auth.verificationInstructions" : "auth.emailSentInstructions")}
           </ThemedText>
 
           <ThemedText style={styles.hint}>{t("auth.didntReceive")}</ThemedText>
@@ -60,7 +61,7 @@ export default function EmailSentScreen() {
 
             <View style={styles.linkRow}>
               <ThemedText style={styles.linkText}>
-                {t("auth.rememberPassword")}
+                {t(isVerify ? "auth.alreadyVerified" : "auth.rememberPassword")}
               </ThemedText>
               <Pressable
                 onPress={() => router.replace("/(auth)/login")}

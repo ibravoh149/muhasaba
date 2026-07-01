@@ -27,6 +27,7 @@
     },
     "plugins": [
       "./plugins/withAndroidBuildConfig",
+      "./plugins/withRNScreensFix",
       "expo-router",
       [
         "expo-splash-screen",
@@ -39,7 +40,15 @@
         }
       ],
       "expo-secure-store",
-      "expo-localization"
+      "expo-localization",
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "Muhasaba needs your location to show accurate prayer times."
+        }
+      ],
+      "expo-font",
+      "expo-image"
     ],
     "experiments": {
       "typedRoutes": true,

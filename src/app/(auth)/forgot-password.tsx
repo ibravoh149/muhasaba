@@ -48,7 +48,7 @@ export default function ForgotPasswordScreen() {
     setIsSubmitting(true);
     try {
       await api.post('/auth/request-password-reset', { email });
-      router.replace({ pathname: "/(auth)/email-sent", params: { email } });
+      router.replace({ pathname: "/(auth)/email-sent", params: { email, type: 'reset' } });
     } catch (e) {
       Alert.alert(t('common.error'), t(getApiError(e) as never));
     } finally {

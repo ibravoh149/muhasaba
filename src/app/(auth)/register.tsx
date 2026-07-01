@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Alert, Pressable, ScrollView, StyleSheet, View } from "react-native";
 import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -15,6 +16,9 @@ import { ThemedButton } from "@/components/themed-button";
 import { ThemedInput } from "@/components/themed-input";
 import { ThemedText } from "@/components/themed-text";
 import { Fonts, FontSizes, Palette, Spacing } from "@/constants/theme";
+import { useAuth } from "@/context/auth";
+import { api } from "@/lib/api";
+import { getApiError } from "@/lib/api-error";
 
 let schema = z.object({
   firstName: z.string().min(1, { message: "validation.required" }),
@@ -34,10 +38,12 @@ type FormValues = z.infer<typeof schema>;
 export default function RegisterScreen() {
   const router = useRouter();
   const { t } = useTranslation();
+  const { signIn } = useAuth();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  function handleSocialAuth(tokens: SocialAuthTokens) {
-    console.log(tokens);
-    router.replace(tokens.onboarding_completed ? '/(tabs)' : '/(onboarding)');
+  async function handleSocialAuth(tokens: SocialAuthTokens) {
+    await signIn(tokens.access_token, tokens.refresh_token);
+    router.replace(tokens.onboarding_completed ? '/(tabs)' : '/(setup)');
   }
 
   function handleSocialError(error: string) {
@@ -54,8 +60,21 @@ export default function RegisterScreen() {
     reValidateMode: "onChange",
   });
 
-  function onSubmit(_data: FormValues) {
-    // TODO: call auth API
+  async function onSubmit({ email, password, firstName, lastName }: FormValues) {
+    setIsSubmitting(true);
+    try {
+      await api.post('/auth/register', {
+        email,
+        password,
+        first_name: firstName,
+        last_name: lastName,
+      });
+      router.replace({ pathname: '/(auth)/email-sent', params: { email, type: 'verify' } });
+    } catch (e) {
+      Alert.alert(t('common.error'), t(getApiError(e) as never));
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (
@@ -164,7 +183,7 @@ export default function RegisterScreen() {
             <ThemedButton
               label={t("auth.createAccount")}
               onPress={handleSubmit(onSubmit)}
-              disabled={Object.keys(errors).length > 0}
+              disabled={isSubmitting || Object.keys(errors).length > 0}
             />
             <View style={styles.linkRow}>
               <ThemedText style={styles.linkText}>

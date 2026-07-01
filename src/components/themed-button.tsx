@@ -1,4 +1,4 @@
-import { ActivityIndicator, Pressable, type PressableProps, StyleSheet, type TextStyle, type ViewStyle } from 'react-native';
+import { ActivityIndicator, Pressable, type PressableProps, StyleSheet, type TextStyle, View, type ViewStyle } from 'react-native';
 
 import { BorderRadius, Fonts, FontSizes, Palette, Spacing } from '@/constants/theme';
 
@@ -11,6 +11,7 @@ export type ThemedButtonProps = PressableProps & {
   loading?: boolean;
   fullWidth?: boolean;
   labelStyle?: TextStyle;
+  icon?: React.ReactNode;
 };
 
 export function ThemedButton({
@@ -22,6 +23,7 @@ export function ThemedButton({
   disabled,
   style,
   labelStyle,
+  icon,
   ...rest
 }: ThemedButtonProps) {
   const isDisabled = disabled || loading;
@@ -44,9 +46,12 @@ export function ThemedButton({
       {loading ? (
         <ActivityIndicator color={variant === 'ghost' ? Palette.primary : Palette.white} />
       ) : (
-        <ThemedText style={[styles.label, styles[`label_${variant}`], styles[`labelSize_${size}`], labelStyle]}>
-          {label}
-        </ThemedText>
+        <View style={styles.inner}>
+          {icon}
+          <ThemedText style={[styles.label, styles[`label_${variant}`], styles[`labelSize_${size}`], labelStyle]}>
+            {label}
+          </ThemedText>
+        </View>
       )}
     </Pressable>
   );
@@ -58,6 +63,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: BorderRadius.full,
     flexDirection: 'row',
+  },
+  inner: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: Spacing.sm,
   },
   fullWidth: {
     width: '100%',
