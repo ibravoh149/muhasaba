@@ -6,6 +6,7 @@ export default {
     save: 'حفظ',
     loading: 'جارٍ التحميل...',
     error: 'حدث خطأ ما',
+    retry: 'حاول مجدداً',
   },
   auth: {
     login: 'تسجيل الدخول',
@@ -89,10 +90,15 @@ export default {
     startJourney: 'ابدأ رحلتك',
   },
   goals: {
-    praySalat: 'الصلاة في وقتها',
+    salat: 'الصلاة في وقتها',
     kinship: 'صلة الرحم',
     almsGiving: 'الصدقة',
     quran: 'قراءة القرآن الكريم',
+    visitation: 'زيارة الأهل والأصدقاء',
+    islamicLearning: 'طلب العلم الشرعي',
+    kindness: 'أعمال الإحسان',
+    fasting: 'الصيام',
+    adhkar: 'قراءة الأذكار',
   },
   onboarding: {
     selectLanguage: 'اختر لغتك المفضلة.',

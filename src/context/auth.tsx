@@ -64,7 +64,8 @@ type AuthContextValue = AuthState & {
   signIn: (accessToken: string, refreshToken: string, user?: User) => Promise<void>;
   signOut: () => Promise<void>;
   completeOnboarding: () => Promise<void>;
-  completeSetup: () => Promise<void>;
+  saveSetup: () => Promise<void>;
+  completeSetup: () => void;
   setLocationDone: () => void;
 };
 
@@ -189,8 +190,10 @@ export function AuthProvider({ children }: Readonly<{ children: React.ReactNode 
         await AsyncStorage.setItem(ONBOARDING_KEY, 'true');
         dispatch({ type: 'FINISH_ONBOARDING' });
       },
-      completeSetup: async () => {
+      saveSetup: async () => {
         await api.patch('/users/onboarding/complete');
+      },
+      completeSetup: () => {
         dispatch({ type: 'COMPLETE_SETUP' });
       },
       setLocationDone: () => {

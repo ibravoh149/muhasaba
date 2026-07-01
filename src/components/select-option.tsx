@@ -1,5 +1,5 @@
 import { type ReactNode } from 'react';
-import { Pressable, type PressableProps,StyleSheet, Text, View } from 'react-native';
+import { Pressable, type PressableProps, type StyleProp, StyleSheet, Text, View, type ViewStyle } from 'react-native';
 
 import { BorderRadius, Fonts, FontSizes, Palette, Spacing } from '@/constants/theme';
 
@@ -8,6 +8,8 @@ import { ThemedText } from './themed-text';
 export type SelectOptionProps = Omit<PressableProps, 'style'> & {
   label: string;
   selected: boolean;
+  description?: string;
+  style?: StyleProp<ViewStyle>;
   /** Optional — accepts any React node: emoji string, Image, custom SVG icon, etc. */
   icon?: ReactNode;
   multiSelect?: boolean;
@@ -16,6 +18,8 @@ export type SelectOptionProps = Omit<PressableProps, 'style'> & {
 export function SelectOption({
   label,
   selected,
+  description,
+  style,
   icon,
   multiSelect = false,
   ...rest
@@ -26,8 +30,8 @@ export function SelectOption({
       accessibilityState={{ checked: selected }}
       style={({ pressed }) => [
         styles.option,
-        selected && styles.optionSelected,
         pressed && styles.optionPressed,
+        style,
       ]}
       {...rest}
     >
@@ -37,7 +41,10 @@ export function SelectOption({
         </View>
       )}
 
-      <ThemedText style={styles.label}>{label}</ThemedText>
+      <View style={styles.labelGroup}>
+        <ThemedText style={styles.label}>{label}</ThemedText>
+        {description ? <ThemedText style={styles.description}>{description}</ThemedText> : null}
+      </View>
 
       <Indicator selected={selected} multiSelect={multiSelect} />
     </Pressable>
@@ -74,9 +81,6 @@ const styles = StyleSheet.create({
     borderColor: 'transparent',
     gap: Spacing.md,
   },
-  optionSelected: {
-    borderColor: Palette.accent,
-  },
   optionPressed: {
     opacity: 0.75,
   },
@@ -87,11 +91,19 @@ const styles = StyleSheet.create({
   iconText: {
     fontSize: 22,
   },
-  label: {
+  labelGroup: {
     flex: 1,
+    gap: 2,
+  },
+  label: {
     fontFamily: Fonts.semiBold,
     fontSize: FontSizes.md,
     color: Palette.white,
+  },
+  description: {
+    fontFamily: Fonts.regular,
+    fontSize: FontSizes.sm,
+    color: Palette.base400,
   },
   indicator: {
     width: 22,
